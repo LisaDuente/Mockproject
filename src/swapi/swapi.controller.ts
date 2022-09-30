@@ -7,6 +7,11 @@ import { UpdateSwapiDto } from './dto/update-swapi.dto';
 export class SwapiController {
   constructor(private readonly swapiService: SwapiService) {}
 
+  @Get('allPersons')
+  getAllPersons(){
+   return this.swapiService.getAllPersons();
+  }
+
   @Post()
   create(@Body() createSwapiDto: CreateSwapiDto) {
     return this.swapiService.create(createSwapiDto);
