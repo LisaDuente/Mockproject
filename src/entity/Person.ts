@@ -35,16 +35,16 @@ export class Person {
     homeworld: string
     
     @Column()
-    films: string []
+    films: string
 
     @Column()
-    species: string []
+    species: string
     
     @Column()
-    starships: string []
+    starships: string
 
     @Column()
-    vehicles: string []
+    vehicles: string
 
     @Column()
     url: string

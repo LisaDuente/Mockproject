@@ -1,18 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Person } from './entity/Person';
 import { SwapiModule } from './swapi/swapi.module';
+import { PersonModule } from './person/person.module';
+
+import config from "../ormconif";
+
 
 @Module({
-  imports: [SwapiModule, 
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5434,
-      username: 'newtons',
-      password: 'newton123',
-      database: 'Starwars',
-      entities: [],
-      synchronize: false      // WARNING!!!! Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
-    })],
+  imports: [
+    SwapiModule, 
+    TypeOrmModule.forRoot(config),
+    TypeOrmModule.forFeature([Person]),
+    PersonModule
+    ],
 })
-export class AppModule {}
+export class AppModule {
+}
