@@ -7,7 +7,7 @@ import { SwapiModule } from './swapi/swapi.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 4000,
+      port: 5434,
       username: 'newtons',
       password: 'newton123',
       database: 'Starwars',
