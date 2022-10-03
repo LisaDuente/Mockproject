@@ -14,7 +14,7 @@ export class SwapiService {
     const personArray = await lastValueFrom(this.httpService.get('https://swapi.dev/api/people')
                       .pipe(map(response => response.data))) 
 
-   console.log(personArray) 
+   return personArray 
 
   }
 
