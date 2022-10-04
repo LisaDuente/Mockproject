@@ -10,13 +10,8 @@ export class SwapiService {
   constructor(private httpService: HttpService) {}
 
   async getAllPersons() {
-    // const personArray = await lastValueFrom(
-    //   this.httpService
-    //     .get('https://swapi.dev/api/people')
-    //     .pipe(map((response) => response.data)),
-    // );
-
     let people = [];
+    const peopleArr = [];
 
     return this.httpService
       .get('https://swapi.dev/api/people')
@@ -29,21 +24,45 @@ export class SwapiService {
       .pipe(
         map(async (count) => {
           const numberOfPagesLeft = Math.ceil((count - 1) / 10);
-          console.log(count);
           const promises = [];
           for (let i = 2; i <= numberOfPagesLeft; i++) {
             promises.push(
               await lastValueFrom(
                 this.httpService
                   .get(`https://swapi.dev/api/people?page=${i}`)
-                  .pipe(map((response) => response.data)),
+                  .pipe(map((response) => response.data.results)),
               ),
             );
           }
-          console.log(promises.length);
-          return Promise.all(promises);
+
+          for (const ppl of people) {
+            peopleArr.push(ppl);
+          }
+
+          for (const array of promises) {
+            for (const people of array) {
+              peopleArr.push(people);
+            }
+          }
+
+          console.log(peopleArr.length);
+          return peopleArr;
+          // return Promise.all(promises);
         }),
       );
+    // .pipe(
+    //   map(async (response) => {
+    //     console.log(response);
+    //     const newArray = [];
+    //     for (const array of people) {
+    //       newArray.push(array);
+    //       for (const persons of array) {
+    //         console.log(persons);
+    //       }
+    //     }
+    //     return newArray;
+    //   }),
+    // );
   }
 
   create(createSwapiDto: CreateSwapiDto) {
