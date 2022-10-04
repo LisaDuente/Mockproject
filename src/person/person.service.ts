@@ -6,15 +6,15 @@ import { PersonDto } from './dto/addPerson.dto';
 @Injectable()
 export class PersonService {
 
-constructor(private dataSource: DataSource) {
+constructor() {
     
 }
 
     getAll(){
-        return this.dataSource.manager.find(Person); //SELECT * from Person
+        return Person.find(); //SELECT * from Person
     }
 
     addTest(person: Person){
-        return this.dataSource.manager.save(person);
+        return Person.save(person);
     }
 }
