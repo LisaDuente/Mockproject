@@ -5,16 +5,12 @@ import { PersonDto } from './dto/addPerson.dto';
 
 @Injectable()
 export class PersonService {
+  getAll() {
+    return Person.find(); //SELECT * from Person
+  }
 
-constructor() {
-    
-}
+  addTest(person: Person) {
+    return Person.save(person);
+  }
 
-    getAll(){
-        return Person.find(); //SELECT * from Person
-    }
-
-    addTest(person: Person){
-        return Person.save(person);
-    }
 }

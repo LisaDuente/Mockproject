@@ -4,16 +4,14 @@ import { Person } from './entity/Person';
 import { SwapiModule } from './swapi/swapi.module';
 import { PersonModule } from './person/person.module';
 
-import config from "../ormconif";
-
+import config from '../ormconif';
 
 @Module({
   imports: [
-    SwapiModule, 
+    SwapiModule,
     TypeOrmModule.forRoot(config),
     TypeOrmModule.forFeature([Person]),
-    PersonModule
-    ],
+    PersonModule,
+  ],
 })
-export class AppModule {
-}
+export class AppModule {}
