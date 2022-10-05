@@ -27,7 +27,7 @@ export class SwapiController {
     return this.swapiService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateSwapiDto: UpdateSwapiDto) {
     return this.swapiService.update(+id, updateSwapiDto);
   }
