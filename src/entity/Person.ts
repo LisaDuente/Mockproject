@@ -56,4 +56,12 @@ export class Person extends BaseEntity {
 
   @Column()
   edited: string;
+
+
+
+
+
+
+
+  
 }
