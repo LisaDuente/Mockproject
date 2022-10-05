@@ -57,53 +57,9 @@ export class Person extends BaseEntity {
   @Column()
   edited: string;
 
-  static findByBirthday(birthDate: string) {
-    return this.createQueryBuilder("person")
-        .where("person.birth_year = :birth_year", { birth_year: birthDate })
-        .getMany()
-  }
 
-  static findByHomeworld(homeworld: string){
-    return this.createQueryBuilder("person")
-    .where("person.homeworld = :homeworld", {homeworld: homeworld})
-    .getMany()
-  }
 
-  static findByEyeColor(color: string){
-    return this.createQueryBuilder("person")
-    .where("person.eye_color = :eye_color", {eye_color: color})
-    .getMany()
-  }
 
-  static findByMass(mass: string){
-    return this.createQueryBuilder("person")
-    .where("person.mass = :mass", {mass: mass})
-    .getMany()
-  }
-
-  static findByHeight(height: string){
-    return this.createQueryBuilder("person")
-    .where("person.height = :height", {height: height})
-    .getMany()
-  }
-
-  static findByGender(gender: string){
-    return this.createQueryBuilder("person")
-    .where("person.gender = :gender", {gender: gender})
-    .getMany()
-  }
-
-  static findByHair(hair: string){
-    return this.createQueryBuilder("person")
-    .where("person.hair_color = :hair_color", {hair_color: hair})
-    .getMany()
-  }
-
-  static findBySkin(skin: string){
-    return this.createQueryBuilder("person")
-    .where("person.skin_color = :skin_color", {skin_color: skin})
-    .getMany()
-  }
 
 
 

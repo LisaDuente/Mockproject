@@ -9,7 +9,7 @@ import { GetPersonDto } from './dto/getPerson.dto';
 @Injectable()
 export class PersonService {
     constructor(private swapiService: SwapiService){}
-    
+
   //added a sort inside of this
   getAll() {
     return Person.find({order: {
@@ -26,35 +26,35 @@ export class PersonService {
   }
 
   getByBirthDate(birthdate: string){
-    return Person.findByBirthday(birthdate);
+    return Person.findBy({birth_year: birthdate});
   }
 
   getByHomeworld(homeworld: string){
-    return Person.findByHomeworld(homeworld);
+    return Person.findBy({homeworld: homeworld});
   }
 
   getByEyeColor(color: string){
-    return Person.findByEyeColor(color)
+    return Person.findBy({eye_color: color})
   }
 
   getByMass(mass: string){
-    return Person.findByMass(mass)
+    return Person.findBy({mass: mass})
   }
 
   getByHeight(height: string){
-    return Person.findByHeight(height)
+    return Person.findBy({height: height})
   }
 
   getByGender(gender: string){
-    return Person.findByGender(gender)
+    return Person.findBy({gender: gender})
   }
 
   getByHair(hair: string){
-    return Person.findByHair(hair)
+    return Person.findBy({hair_color: hair})
   }
 
   getBySkin(skin: string){
-    return Person.findBySkin(skin)
+    return Person.findBy({skin_color: skin})
   }
 
   //this returns all people with blue eyes, all people with gender female.... but not all blue eyed females!
@@ -66,25 +66,13 @@ export class PersonService {
       }
     }
 
-    if("birth_year" in dto){
-      for(let person of await Person.findByBirthday(dto.birth_year)){
-        personList.push(person)
-      }
-    }
-
-    if("eye_color" in dto){
-      for(let person of await Person.findByEyeColor(dto.eye_color)){
-        personList.push(person)
-      }
-    }
-
     if("gender" in dto){
-      for(let person of await Person.findByGender(dto.gender)){
+      for(let person of await Person.findBy({gender: dto.gender})){
         personList.push(person)
       }
     }
 
-    return personList
+    
   }
 
 
