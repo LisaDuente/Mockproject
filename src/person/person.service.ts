@@ -17,8 +17,11 @@ export class PersonService {
 
   async seedDatabase(){
     let personArray = await this.swapiService.getAllPersons();
-    /*for(const person of personArray){
+    console.log(personArray)
+    for(const person of personArray){
         Person.save({...person})
-    }*/
+    }
+    return "seeded"
   }
+  
 }

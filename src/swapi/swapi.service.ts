@@ -11,9 +11,8 @@ export class SwapiService {
 
   async getAllPersons() {
     let people = [];
-    const peopleArr = [];
 
-    return this.httpService
+    return lastValueFrom(this.httpService
       .get('https://swapi.dev/api/people')
       .pipe(
         map((response) => {
@@ -38,7 +37,7 @@ export class SwapiService {
 
           return people;
         }),
-      )
+      ))
   }
 
   create(createSwapiDto: CreateSwapiDto) {
