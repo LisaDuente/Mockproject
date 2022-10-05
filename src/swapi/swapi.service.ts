@@ -17,52 +17,28 @@ export class SwapiService {
       .get('https://swapi.dev/api/people')
       .pipe(
         map((response) => {
-          people = response.data.results;
           return response.data.count;
         }),
       )
       .pipe(
         map(async (count) => {
           const numberOfPagesLeft = Math.ceil((count - 1) / 10);
-          const promises = [];
-          for (let i = 2; i <= numberOfPagesLeft; i++) {
-            promises.push(
-              await lastValueFrom(
-                this.httpService
-                  .get(`https://swapi.dev/api/people?page=${i}`)
-                  .pipe(map((response) => response.data.results)),
-              ),
-            );
+          
+          for (let i = 1; i <= numberOfPagesLeft; i++) {
+            await lastValueFrom(
+              this.httpService
+                .get(`https://swapi.dev/api/people?page=${i}`)
+                .pipe(map((response) => {
+                  for(let person of  response.data.results){
+                    people.push(person)
+                  } 
+              })),
+            )
           }
 
-          for (const ppl of people) {
-            peopleArr.push(ppl);
-          }
-
-          for (const array of promises) {
-            for (const people of array) {
-              peopleArr.push(people);
-            }
-          }
-
-          console.log(peopleArr.length);
-          return peopleArr;
-          // return Promise.all(promises);
+          return people;
         }),
-      );
-    // .pipe(
-    //   map(async (response) => {
-    //     console.log(response);
-    //     const newArray = [];
-    //     for (const array of people) {
-    //       newArray.push(array);
-    //       for (const persons of array) {
-    //         console.log(persons);
-    //       }
-    //     }
-    //     return newArray;
-    //   }),
-    // );
+      )
   }
 
   create(createSwapiDto: CreateSwapiDto) {
