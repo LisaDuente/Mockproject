@@ -1,5 +1,5 @@
 export class CreateSwapiDto {
-    id: number;
+  id: number;
   name: string;
   birth_year: string;
   eye_color: string;
