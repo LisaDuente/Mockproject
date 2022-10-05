@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
-import { PersonDto } from './dto/addPerson.dto';
+import { UpdatePerson } from './dto/updatePerson.dto';
 
 @Injectable()
 export class PersonService {
@@ -24,4 +23,8 @@ export class PersonService {
     return "seeded"
   }
   
+  update(id: number, updatePerson: Partial<UpdatePerson> ) {
+    
+    return Person.save({...updatePerson});
+  }
 }

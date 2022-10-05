@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SwapiService } from './swapi.service';
 import { CreateSwapiDto } from './dto/create-swapi.dto';
 import { UpdateSwapiDto } from './dto/update-swapi.dto';
+import { NOTIMP } from 'dns';
 
 @Controller('swapi')
 export class SwapiController {
@@ -26,12 +27,7 @@ export class SwapiController {
   findOne(@Param('id') id: string) {
     return this.swapiService.findOne(+id);
   }
-
-  @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateSwapiDto: Partial<UpdateSwapiDto>) {
-    return this.swapiService.update(+id, updateSwapiDto);
-  }
-
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.swapiService.remove(+id);

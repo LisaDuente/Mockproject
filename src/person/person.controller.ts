@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PersistedEntityNotFoundError } from 'typeorm';
-import { Person } from '../entity/Person';
-import { PersonDto } from './dto/addPerson.dto';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { UpdateSwapiDto } from '../swapi/dto/update-swapi.dto';
+import { UpdatePerson } from './dto/updatePerson.dto';
 import { PersonService } from './person.service';
 
 @Controller('person')
 export class PersonController {
+  swapiService: any;
   constructor(private service: PersonService) {}
 
   @Get('getAll')
@@ -23,5 +23,10 @@ export class PersonController {
   @Get("/seed")
   seed(){
     return this.service.seedDatabase()
+  }
+
+  @Patch('update/:id')
+  update(@Param('id') id: string, @Body() updatePerson: Partial<UpdatePerson>) {
+    return this.service.update(+id, updatePerson);
   }
 }
