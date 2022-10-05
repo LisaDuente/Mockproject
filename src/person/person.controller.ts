@@ -19,4 +19,9 @@ export class PersonController {
     
     return this.service.addTest(object);
   }
+
+  @Get("/seed")
+  seed(){
+    return this.service.seedDatabase()
+  }
 }
