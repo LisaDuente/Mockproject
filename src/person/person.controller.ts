@@ -1,6 +1,7 @@
-import { Body, Controller, Get, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { PersistedEntityNotFoundError } from 'typeorm';
 import { GetPersonDto } from './dto/getPerson.dto';
+import { UpdatePerson } from './dto/updatePerson.dto';
 import { PersonService } from './person.service';
 
 @Controller('person')
