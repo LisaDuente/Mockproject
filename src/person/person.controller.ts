@@ -71,11 +71,29 @@ export class PersonController {
     return this.service.getByServeralParams(dto);
   }
 
-  //problem: if we want to find a homeworld we need to look up the link in the relation! 
-  //add in SEED: fetch all the data from the other relations to make an array with words?
   @Get("getByHomeworld")
   getByHomeWorld(@Body() dto: GetPersonDto){
     return this.service.getByHomeworld(dto.homeworld);
+  }
+
+  @Get("getBySpecies")
+  getBySpecies(@Body() dto: GetPersonDto){
+    return this.service.getBySpecies(dto.species);
+  }
+
+  @Get("getByFilm")
+  getByFilm(@Body() dto: GetPersonDto){
+    return this.service.getByFilm(dto.films);
+  }
+
+  @Get("getByVehicle")
+  getByVehicle(@Body() dto: GetPersonDto){
+    return this.service.getByVehicle(dto.vehicles);
+  }
+
+  @Get("getByStarship")
+  getByStarship(@Body() dto: GetPersonDto){
+    return this.service.getByStarship(dto.starships);
   }
 
   @Post('test')
@@ -91,7 +109,7 @@ export class PersonController {
   }
 
   @Get("seedWithoutLinks")
-  seedWL(){
+  seedWOL(){
     return this.service.seedDatabaseWithoutLinks()
   }
 

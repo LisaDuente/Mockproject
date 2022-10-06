@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Like } from 'typeorm';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
 import { PersonDto } from './dto/addPerson.dto';
@@ -54,6 +55,31 @@ export class PersonService {
   getBySkin(skin: string){
     return Person.findBy({skin_color: skin})
   }
+
+  getBySpecies(species: string){
+    return Person.findBy({
+      species: species,
+    })
+  }
+
+  getByFilm(film: string){
+    return Person.findBy({
+      films: Like(`%${film}%`),
+    })
+  }
+
+  getByVehicle(vehicle: string){
+    return Person.findBy({
+      vehicles: Like(`%${vehicle}%`),
+    })
+  }
+
+  getByStarship(starship: string){
+    return Person.findBy({
+      starships: Like(`%${starship}%`),
+    })
+  }
+
 
   //this returns all people with blue eyes, all people with gender female.... but not all blue eyed females!
   async getByServeralParams(dto: GetPersonDto){
