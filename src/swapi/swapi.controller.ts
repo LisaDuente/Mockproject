@@ -39,8 +39,6 @@ export class SwapiController {
     return this.swapiService.getStarship(dto.id)
   }
 
-
-
   @Post()
   create(@Body() createSwapiDto: CreateSwapiDto) {
     return this.swapiService.create(createSwapiDto);
