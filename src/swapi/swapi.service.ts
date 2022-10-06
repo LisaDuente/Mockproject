@@ -56,7 +56,7 @@ export class SwapiService {
   update(id: number, updateSwapiDto: Partial<UpdateSwapiDto> ) {
     
     return Person.save({...updateSwapiDto});
-  }
+  }1
 
   remove(id: number) {
     return `This action removes a #${id} swapi`;

@@ -5,6 +5,7 @@ import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
 import { UpdatePerson } from './dto/updatePerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class PersonService {
@@ -90,7 +91,6 @@ export class PersonService {
   }
   
   update(id: number, updatePerson: Partial<UpdatePerson> ) {
-    
     return Person.save({...updatePerson});
   }
 }

@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { PersistedEntityNotFoundError } from 'typeorm';
+import { Person } from '../entity/Person';
 import { GetPersonDto } from './dto/getPerson.dto';
 import { UpdatePerson } from './dto/updatePerson.dto';
 import { PersonService } from './person.service';
@@ -91,7 +92,13 @@ export class PersonController {
   }
 
   @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updatePerson: Partial<UpdatePerson>) {
+  update(@Param('id') id: number, @Body() updatePerson: Partial<UpdatePerson>) {
     return this.service.update(+id, updatePerson);
   }
+    @Patch('update2')
+  update2(@Body() updatePerson: Partial<UpdatePerson>) {
+    return this.service.update(updatePerson.id, updatePerson);
+  }
+
 }
+
