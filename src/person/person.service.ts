@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { toNamespacedPath } from 'path';
-import { DataSource } from 'typeorm';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
-import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
 
 @Injectable()
@@ -70,9 +67,7 @@ export class PersonService {
       for(let person of await Person.findBy({gender: dto.gender})){
         personList.push(person)
       }
-    }
-
-    
+    }  
   }
 
 

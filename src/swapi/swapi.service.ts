@@ -40,6 +40,57 @@ export class SwapiService {
       ))
   }
 
+  async getHomeworld(id: number){
+    return await lastValueFrom(
+      this.httpService.get(`https://swapi.dev/api/planets/${id}/`)
+        .pipe(map((response) => {return response.data.name}))
+    )
+  }
+
+  async getHomeworldByPath(path: string){
+    return await lastValueFrom(
+      this.httpService.get(path)
+        .pipe(map((response) => {return response.data.name}))
+    )
+  }
+
+  async getFilm(id: number){
+  return await lastValueFrom(
+    this.httpService.get(`https://swapi.dev/api/films/${id}/`)
+      .pipe(map((response) => {return response.data.title}))
+  )
+  }
+
+  async getFilmsByPath(path: string){
+    return await lastValueFrom(
+      this.httpService.get(path)
+        .pipe(map((response) => {return response.data.title}))
+    )
+  }
+
+  async getSpecies(id: number){
+    return await lastValueFrom(
+      this.httpService.get(`https://swapi.dev/api/species/${id}/`)
+        .pipe(map((response) => {return response.data.name}))
+    )
+    }
+
+  async getVehicle(id: number){
+    return await lastValueFrom(
+      this.httpService.get(`https://swapi.dev/api/vehicles/${id}/`)
+        .pipe(map((response) => {return response.data.name}))
+    )
+    }
+    
+
+    async getStarship(id: number){
+      return await lastValueFrom(
+        this.httpService.get(`https://swapi.dev/api/starships/${id}/`)
+          .pipe(map((response) => {return response.data.name}))
+      )
+      }
+  
+
   create(createSwapiDto: CreateSwapiDto) {
     return 'This action adds a new swapi';
   }
