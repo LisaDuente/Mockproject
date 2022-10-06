@@ -47,25 +47,11 @@ export class SwapiService {
     )
   }
 
-  async getHomeworldByPath(path: string){
-    return await lastValueFrom(
-      this.httpService.get(path)
-        .pipe(map((response) => {return response.data.name}))
-    )
-  }
-
   async getFilm(id: number){
   return await lastValueFrom(
     this.httpService.get(`https://swapi.dev/api/films/${id}/`)
       .pipe(map((response) => {return response.data.title}))
   )
-  }
-
-  async getFilmsByPath(path: string){
-    return await lastValueFrom(
-      this.httpService.get(path)
-        .pipe(map((response) => {return response.data.title}))
-    )
   }
 
   async getSpecies(id: number){
@@ -81,7 +67,21 @@ export class SwapiService {
         .pipe(map((response) => {return response.data.name}))
     )
     }
-    
+
+  async getByPath(path: string){
+    return await lastValueFrom(
+      this.httpService.get(path)
+        .pipe(map((response) => {
+          if("title" in response.data){
+            return response.data.title
+          }else{
+            return response.data.name
+          }
+          
+        }))
+    )
+  }
+  
 
     async getStarship(id: number){
       return await lastValueFrom(

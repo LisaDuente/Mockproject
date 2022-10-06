@@ -1,5 +1,6 @@
 import { Body, Controller, Get, ParseIntPipe, Post } from '@nestjs/common';
 import { PersistedEntityNotFoundError } from 'typeorm';
+import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
 import { PersonService } from './person.service';
 
@@ -87,5 +88,15 @@ export class PersonController {
   @Get("/seed")
   seed(){
     return this.service.seedDatabase()
+  }
+
+  @Get("seedWithoutLinks")
+  seedWL(){
+    return this.service.seedDatabaseWithoutLinks()
+  }
+
+  @Post("addWithoutLinks")
+  addWithoutLinks(@Body() dto: PersonDto){
+    return this.service.createPersonWithoutLinks(dto)
   }
 }

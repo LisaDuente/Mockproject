@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
+import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
 
 @Injectable()
@@ -75,9 +76,67 @@ export class PersonService {
     return Person.save({...person});
   }
 
+  async createPersonWithoutLinks(person: PersonDto){
+    let homeworld: string;
+    let films = [];
+    let species = []
+    let vehicles = []
+    let starships = []
+
+    homeworld = await this.swapiService.getByPath(person.homeworld)
+    if(person.films.length > 0){
+      for(let path of person.films){
+        films.push(
+          await this.swapiService.getByPath(path)
+        )
+      }
+    }
+  
+    if(person.species.length > 0){
+      for(let path of person.species){
+        species.push(
+          await this.swapiService.getByPath(path)
+        )
+      }
+    }
+   
+    if(person.vehicles.length > 0){
+      for(let path of person.vehicles){
+        vehicles.push(
+          await this.swapiService.getByPath(path)
+        )
+      }
+    }
+   
+    if(person.starships.length > 0){
+      for(let path of person.starships){
+        starships.push(
+          await this.swapiService.getByPath(path)
+        )
+      }
+    }
+  
+    person.homeworld = homeworld;
+    person.species = species.toString();
+    person.vehicles = vehicles.toString();
+    person.starships = starships.toString();
+    person.films = films.toString();
+
+    Person.save({...person})
+
+    return person;
+  }
+
+  async seedDatabaseWithoutLinks(){
+    let personArray = await this.swapiService.getAllPersons();
+    for(const person of personArray){
+        this.createPersonWithoutLinks(person)
+    }
+    return "seeded"
+  }
+
   async seedDatabase(){
     let personArray = await this.swapiService.getAllPersons();
-    console.log(personArray)
     for(const person of personArray){
         Person.save({...person})
     }
