@@ -1,5 +1,10 @@
-
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  Unique,
+} from 'typeorm';
 
 @Entity()
 export class Person extends BaseEntity {
