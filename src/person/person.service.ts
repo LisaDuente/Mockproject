@@ -6,6 +6,7 @@ import { SwapiService } from '../swapi/swapi.service';
 import { UpdatePerson } from './dto/updatePerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
 import { firstValueFrom } from 'rxjs';
+import { PersonDto } from './dto/addPerson.dto';
 
 @Injectable()
 export class PersonService {
