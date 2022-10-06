@@ -1,10 +1,6 @@
-<<<<<<< HEAD
+
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { DataSource, QueryBuilder, QueryFailedError } from 'typeorm';
-=======
-import { Injectable } from '@nestjs/common';
-import { Like } from 'typeorm';
->>>>>>> feature/GetRequests
+import { DataSource, Like, QueryBuilder, QueryFailedError } from 'typeorm';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
 import { PersonDto } from './dto/addPerson.dto';
@@ -12,13 +8,10 @@ import { GetPersonDto } from './dto/getPerson.dto';
 
 @Injectable()
 export class PersonService {
-<<<<<<< HEAD
-  constructor(private swapiService: SwapiService) {}
-=======
+
     constructor(private swapiService: SwapiService){}
 
   //added a sort inside of this
->>>>>>> feature/GetRequests
   getAll() {
     return Person.find({order: {
       id: "DESC"
@@ -111,7 +104,7 @@ export class PersonService {
     return Person.save({ ...person });
   }
 
-<<<<<<< HEAD
+
   async seedDatabase() {
     const personArray = await this.swapiService.getAllPersons();
 
@@ -150,8 +143,9 @@ export class PersonService {
         .from(Person)
         .where('id = :id', {id: dbToDelete[i].id})
         .execute()
+    }
+  }
 
-=======
   async createPersonWithoutLinks(person: PersonDto){
     let homeworld: string;
     let films = [];
@@ -211,15 +205,6 @@ export class PersonService {
     return "seeded"
   }
 
-  async seedDatabase(){
-    let personArray = await this.swapiService.getAllPersons();
-    for(const person of personArray){
-        Person.save({...person})
->>>>>>> feature/GetRequests
-    }
-
-    return 'Database deleted'
-  }
 
 
   

@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
-import { DeleteDateColumn } from 'typeorm';
 import { DeletePersonDto } from './dto/DeletePerson.dto';
-=======
-import { Body, Controller, Get, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, ParseIntPipe, Post } from '@nestjs/common';
 import { PersistedEntityNotFoundError } from 'typeorm';
 import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
->>>>>>> feature/GetRequests
 import { PersonService } from './person.service';
 
 @Controller('person')
@@ -119,7 +114,7 @@ export class PersonController {
     return this.service.deleteOne(+dto.id)
   }
 
-<<<<<<< HEAD
+
   @Delete('deleteAll')
   deleteAll() {
     return this.service.deleteAll()
@@ -134,7 +129,7 @@ export class PersonController {
   // restore(@Body() dto: DeletePersonDto) {
   //   return this.service.restoreSoftDelete(+dto.id)
   // }
-=======
+
   @Get("seedWithoutLinks")
   seedWOL(){
     return this.service.seedDatabaseWithoutLinks()
@@ -144,5 +139,4 @@ export class PersonController {
   addWithoutLinks(@Body() dto: PersonDto){
     return this.service.createPersonWithoutLinks(dto)
   }
->>>>>>> feature/GetRequests
 }

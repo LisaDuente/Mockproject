@@ -56,11 +56,8 @@ export class Person extends BaseEntity {
 
   @Column()
   edited: string;
-<<<<<<< HEAD
 
   @DeleteDateColumn()
   public deletedAt: Date;
-=======
-  
->>>>>>> feature/GetRequests
+
 }
