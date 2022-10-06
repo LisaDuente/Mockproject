@@ -10,34 +10,38 @@ export class SwapiService {
   constructor(private httpService: HttpService) {}
 
   async getAllPersons() {
-    let people = [];
+    const people = [];
 
-    return lastValueFrom(this.httpService
-      .get('https://swapi.dev/api/people')
-      .pipe(
-        map((response) => {
-          return response.data.count;
-        }),
-      )
-      .pipe(
-        map(async (count) => {
-          const numberOfPagesLeft = Math.ceil((count - 1) / 10);
-          
-          for (let i = 1; i <= numberOfPagesLeft; i++) {
-            await lastValueFrom(
-              this.httpService
-                .get(`https://swapi.dev/api/people?page=${i}`)
-                .pipe(map((response) => {
-                  for(let person of  response.data.results){
-                    people.push(person)
-                  } 
-              })),
-            )
-          }
+    return lastValueFrom(
+      this.httpService
+        .get('https://swapi.dev/api/people')
+        .pipe(
+          map((response) => {
+            return response.data.count;
+          }),
+        )
+        .pipe(
+          map(async (count) => {
+            const numberOfPagesLeft = Math.ceil((count - 1) / 10);
 
-          return people;
-        }),
-      ))
+            for (let i = 1; i <= numberOfPagesLeft; i++) {
+              await lastValueFrom(
+                this.httpService
+                  .get(`https://swapi.dev/api/people?page=${i}`)
+                  .pipe(
+                    map((response) => {
+                      for (const person of response.data.results) {
+                        people.push(person);
+                      }
+                    }),
+                  ),
+              );
+            }
+
+            return people;
+          }),
+        ),
+    );
   }
 
   create(createSwapiDto: CreateSwapiDto) {

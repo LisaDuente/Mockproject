@@ -14,14 +14,14 @@ export class PersonController {
 
   @Post('test')
   test(@Body() json: string) {
-    let object = JSON.parse(JSON.stringify(json));
-    
+    const object = JSON.parse(JSON.stringify(json));
+
     return this.service.addTest(object);
   }
 
-  @Get("/seed")
-  seed(){
-    return this.service.seedDatabase()
+  @Get('seed')
+  seed() {
+    return this.service.seedDatabase();
   }
 
   @Delete('deleteOne')
