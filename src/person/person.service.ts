@@ -3,8 +3,9 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { DataSource, Like, QueryBuilder, QueryFailedError } from 'typeorm';
 import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
-import { PersonDto } from './dto/addPerson.dto';
+import { UpdatePerson } from './dto/updatePerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class PersonService {
@@ -232,4 +233,7 @@ export class PersonService {
   //     .execute()
   // }
   
+  update(id: number, updatePerson: Partial<UpdatePerson> ) {
+    return Person.save({...updatePerson});
+  }
 }

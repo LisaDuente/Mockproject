@@ -53,12 +53,7 @@ export class SwapiController {
   findOne(@Param('id') id: string) {
     return this.swapiService.findOne(+id);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSwapiDto: UpdateSwapiDto) {
-    return this.swapiService.update(+id, updateSwapiDto);
-  }
-
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.swapiService.remove(+id);

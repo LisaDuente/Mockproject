@@ -1,8 +1,8 @@
-import { DeletePersonDto } from './dto/DeletePerson.dto';
-import { Body, Controller, Delete, Get, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, ParseIntPipe, Post } from '@nestjs/common';
 import { PersistedEntityNotFoundError } from 'typeorm';
 import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
+import { UpdatePerson } from './dto/updatePerson.dto';
 import { PersonService } from './person.service';
 
 @Controller('person')
@@ -139,4 +139,15 @@ export class PersonController {
   addWithoutLinks(@Body() dto: PersonDto){
     return this.service.createPersonWithoutLinks(dto)
   }
+
+  @Patch('update/:id')
+  update(@Param('id') id: number, @Body() updatePerson: Partial<UpdatePerson>) {
+    return this.service.update(+id, updatePerson);
+  }
+    @Patch('update2')
+  update2(@Body() updatePerson: Partial<UpdatePerson>) {
+    return this.service.update(updatePerson.id, updatePerson);
+  }
+
 }
+

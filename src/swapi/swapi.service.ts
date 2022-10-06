@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { response } from 'express';
 import { lastValueFrom, map, pipe } from 'rxjs';
+import { Person } from '../entity/Person';
 import { CreateSwapiDto } from './dto/create-swapi.dto';
 import { UpdateSwapiDto } from './dto/update-swapi.dto';
 
@@ -107,9 +108,10 @@ export class SwapiService {
     return `This action returns a #${id} swapi`;
   }
 
-  update(id: number, updateSwapiDto: UpdateSwapiDto) {
-    return `This action updates a #${id} swapi`;
-  }
+  update(id: number, updateSwapiDto: Partial<UpdateSwapiDto> ) {
+    
+    return Person.save({...updateSwapiDto});
+  }1
 
   remove(id: number) {
     return `This action removes a #${id} swapi`;
