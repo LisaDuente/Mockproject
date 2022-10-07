@@ -4,6 +4,7 @@ import { Person } from '../entity/Person';
 import { SwapiService } from '../swapi/swapi.service';
 import { PersonDto } from './dto/addPerson.dto';
 import { GetPersonDto } from './dto/getPerson.dto';
+import { UpdatePerson } from './dto/updatePeople.dto';
 
 @Injectable()
 export class PersonService {
