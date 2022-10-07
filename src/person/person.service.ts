@@ -198,10 +198,28 @@ export class PersonService {
   }
 
   async seedDatabaseWithoutLinks(){
-    let personArray = await this.swapiService.getAllPersons();
-    for(const person of personArray){
-        this.createPersonWithoutLinks(person)
+    //sometimes the connection seems to break here?
+    try{
+      let personArray = await this.swapiService.getAllPersons();
+      let checkArray = await this.getAll(); //await here seems to make it hard to send the request
+      let checkSet = new Set();
+  
+      if(checkArray.length === 0){
+        for(let person of personArray){
+          this.createPersonWithoutLinks(person)
+        }
+      }else{
+        checkArray.map((person) => checkSet.add(person.name))
+        for(let person of personArray){
+          if(!checkSet.has(person.name)){
+            this.createPersonWithoutLinks(person)
+          }
+        }
+      }
+    }catch(error){
+      throw error;
     }
+  
     return "seeded"
   }
 
