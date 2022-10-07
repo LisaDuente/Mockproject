@@ -1,4 +1,3 @@
-
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { DataSource, Like, QueryBuilder, QueryFailedError } from 'typeorm';
 import { Person } from '../entity/Person';
@@ -8,102 +7,100 @@ import { GetPersonDto } from './dto/getPerson.dto';
 
 @Injectable()
 export class PersonService {
-
-    constructor(private swapiService: SwapiService){}
+  constructor(private swapiService: SwapiService) {}
 
   //added a sort inside of this
   getAll() {
-    return Person.find({order: {
-      id: "DESC"
-    }}); //SELECT * from Person
+    return Person.find({
+      order: {
+        id: 'DESC',
+      },
+    }); //SELECT * from Person
   }
 
-  getById(id: number){
-    return Person.findBy({id: id});
+  getById(id: number) {
+    return Person.findBy({ id: id });
   }
 
-  getByName(name: string){
-    return Person.findBy({name: name});
+  getByName(name: string) {
+    return Person.findBy({ name: name });
   }
 
-  getByBirthDate(birthdate: string){
-    return Person.findBy({birth_year: birthdate});
+  getByBirthDate(birthdate: string) {
+    return Person.findBy({ birth_year: birthdate });
   }
 
-  getByHomeworld(homeworld: string){
-    return Person.findBy({homeworld: homeworld});
+  getByHomeworld(homeworld: string) {
+    return Person.findBy({ homeworld: homeworld });
   }
 
-  getByEyeColor(color: string){
-    return Person.findBy({eye_color: color})
+  getByEyeColor(color: string) {
+    return Person.findBy({ eye_color: color });
   }
 
-  getByMass(mass: string){
-    return Person.findBy({mass: mass})
+  getByMass(mass: string) {
+    return Person.findBy({ mass: mass });
   }
 
-  getByHeight(height: string){
-    return Person.findBy({height: height})
+  getByHeight(height: string) {
+    return Person.findBy({ height: height });
   }
 
-  getByGender(gender: string){
-    return Person.findBy({gender: gender})
+  getByGender(gender: string) {
+    return Person.findBy({ gender: gender });
   }
 
-  getByHair(hair: string){
-    return Person.findBy({hair_color: hair})
+  getByHair(hair: string) {
+    return Person.findBy({ hair_color: hair });
   }
 
-  getBySkin(skin: string){
-    return Person.findBy({skin_color: skin})
+  getBySkin(skin: string) {
+    return Person.findBy({ skin_color: skin });
   }
 
-  getBySpecies(species: string){
+  getBySpecies(species: string) {
     return Person.findBy({
       species: species,
-    })
+    });
   }
 
-  getByFilm(film: string){
+  getByFilm(film: string) {
     return Person.findBy({
       films: Like(`%${film}%`),
-    })
+    });
   }
 
-  getByVehicle(vehicle: string){
+  getByVehicle(vehicle: string) {
     return Person.findBy({
       vehicles: Like(`%${vehicle}%`),
-    })
+    });
   }
 
-  getByStarship(starship: string){
+  getByStarship(starship: string) {
     return Person.findBy({
       starships: Like(`%${starship}%`),
-    })
+    });
   }
 
-
   //this returns all people with blue eyes, all people with gender female.... but not all blue eyed females!
-  async getByServeralParams(dto: GetPersonDto){
-    let personList = [];
-    if("name" in dto){
-      for(let person of await Person.findBy({name: dto.name})){
-        personList.push(person)
+  async getByServeralParams(dto: GetPersonDto) {
+    const personList = [];
+    if ('name' in dto) {
+      for (const person of await Person.findBy({ name: dto.name })) {
+        personList.push(person);
       }
     }
 
-    if("gender" in dto){
-      for(let person of await Person.findBy({gender: dto.gender})){
-        personList.push(person)
+    if ('gender' in dto) {
+      for (const person of await Person.findBy({ gender: dto.gender })) {
+        personList.push(person);
       }
-    }  
+    }
   }
-
 
   addTest(person: Person) {
     return Person.save({ ...person });
   }
-
 
   async seedDatabase() {
     const personArray = await this.swapiService.getAllPersons();
@@ -126,88 +123,75 @@ export class PersonService {
 
   // Deletes a row chosen by unique id
   async deleteOne(id: number) {
-     await Person
-      .createQueryBuilder()
+    await Person.createQueryBuilder()
       .delete()
       .from(Person)
-      .where('id = :id', {id: id})
-      .execute()
+      .where('id = :id', { id: id })
+      .execute();
   }
 
   async deleteAll() {
-    const dbToDelete = await Person.find()
-    for(let i = 0; i < dbToDelete.length; i++) {
-    await Person
-        .createQueryBuilder()
+    const dbToDelete = await Person.find();
+    for (let i = 0; i < dbToDelete.length; i++) {
+      await Person.createQueryBuilder()
         .delete()
         .from(Person)
-        .where('id = :id', {id: dbToDelete[i].id})
-        .execute()
+        .where('id = :id', { id: dbToDelete[i].id })
+        .execute();
     }
   }
 
-  async createPersonWithoutLinks(person: PersonDto){
+  async createPersonWithoutLinks(person: PersonDto) {
     let homeworld: string;
-    let films = [];
-    let species = []
-    let vehicles = []
-    let starships = []
+    const films = [];
+    const species = [];
+    const vehicles = [];
+    const starships = [];
 
-    homeworld = await this.swapiService.getByPath(person.homeworld)
-    if(person.films.length > 0){
-      for(let path of person.films){
-        films.push(
-          await this.swapiService.getByPath(path)
-        )
+    homeworld = await this.swapiService.getByPath(person.homeworld);
+    if (person.films.length > 0) {
+      for (const path of person.films) {
+        films.push(await this.swapiService.getByPath(path));
       }
     }
-  
-    if(person.species.length > 0){
-      for(let path of person.species){
-        species.push(
-          await this.swapiService.getByPath(path)
-        )
+
+    if (person.species.length > 0) {
+      for (const path of person.species) {
+        species.push(await this.swapiService.getByPath(path));
       }
     }
-   
-    if(person.vehicles.length > 0){
-      for(let path of person.vehicles){
-        vehicles.push(
-          await this.swapiService.getByPath(path)
-        )
+
+    if (person.vehicles.length > 0) {
+      for (const path of person.vehicles) {
+        vehicles.push(await this.swapiService.getByPath(path));
       }
     }
-   
-    if(person.starships.length > 0){
-      for(let path of person.starships){
-        starships.push(
-          await this.swapiService.getByPath(path)
-        )
+
+    if (person.starships.length > 0) {
+      for (const path of person.starships) {
+        starships.push(await this.swapiService.getByPath(path));
       }
     }
-  
+
     person.homeworld = homeworld;
     person.species = species.toString();
     person.vehicles = vehicles.toString();
     person.starships = starships.toString();
     person.films = films.toString();
 
-    Person.save({...person})
+    Person.save({ ...person });
 
     return person;
   }
 
-  async seedDatabaseWithoutLinks(){
-    let personArray = await this.swapiService.getAllPersons();
-    for(const person of personArray){
-        this.createPersonWithoutLinks(person)
+  async seedDatabaseWithoutLinks() {
+    const personArray = await this.swapiService.getAllPersons();
+    for (const person of personArray) {
+      this.createPersonWithoutLinks(person);
     }
-    return "seeded"
+    return 'seeded';
   }
 
-
-
-  
   // "Flags" a row to make it unusable
   // async softDelete (id: number) {
   //   const deleteResponse = await this.personRepository.softDelete({id: id});
@@ -231,5 +215,4 @@ export class PersonService {
   //     .where('id = :id', {id: id})
   //     .execute()
   // }
-  
 }
