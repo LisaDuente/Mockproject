@@ -193,6 +193,10 @@ export class PersonService {
     return 'seeded';
   }
 
+  update(id: number, updatePerson: Partial<UpdatePerson>) {
+    return Person.save({...updatePerson})
+  }
+
   // "Flags" a row to make it unusable
   // async softDelete (id: number) {
   //   const deleteResponse = await this.personRepository.softDelete({id: id});
